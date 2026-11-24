@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ne Kadar Kıskançsın?</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f3f6fa;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 14px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 540px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+      padding: 28px 24px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .top-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 22px;
+    }
+
+    .name-label {
+      display: block;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .name-input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 15px;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      outline: none;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .name-input:focus {
+      border-color: #3b82f6;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 13px 16px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.08s;
+    }
+
+    .btn:active {
+      transform: scale(0.99);
+    }
+
+    .btn-primary {
+      background-color: #60a5fa;
+      color: #ffffff;
+      border: 1px solid #3b82f6;
+    }
+
+    .btn-primary:hover {
+      background-color: #3b82f6;
+    }
+
+    .creator-badge {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    .badge-wrap {
+      text-align: center;
+    }
+
+    .error-msg {
+      color: #dc2626;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+      min-height: 18px;
+    }
+
+    .progress-wrap {
+      margin-bottom: 18px;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #3b82f6;
+      transition: width 0.25s ease;
+    }
+
+    .question-text {
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #0f172a;
+      margin-bottom: 16px;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 13px 15px;
+      font-size: 14.5px;
+      line-height: 1.4;
+      background: #f8fafc;
+      color: #1e293b;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .option-btn:hover {
+      background: #eff6ff;
+      border-color: #3b82f6;
+    }
+
+    .result-header {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+
+    .result-name {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .result-percent {
+      text-align: center;
+      font-size: 68px;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.05;
+      margin: 10px 0 18px;
+    }
+
+    .result-level {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #1d4ed8;
+      margin-bottom: 14px;
+    }
+
+    .reaction-box {
+      background: #fefce8;
+      border: 1.5px solid #fde047;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .reaction-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #854d0e;
+      margin-bottom: 6px;
+    }
+
+    .reaction-text {
+      font-size: 15.5px;
+      line-height: 1.55;
+      color: #1e293b;
+      font-weight: 500;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="start-screen">
+      <div class="top-title">Ne Kadar Kıskançsın?</div>
+      <div class="section-label">İlişki Kıskançlık Testi</div>
+
+      <label class="name-label" for="player-name">Adını Yaz</label>
+      <input
+        type="text"
+        id="player-name"
+        class="name-input"
+        placeholder="Örn: Deniz"
+        maxlength="40"
+      />
+      <div id="error-msg" class="error-msg"></div>
+
+      <button type="button" id="start-btn" class="btn btn-primary" onclick="window.startQuiz()">Teste Başla &raquo;</button>
+
+      <div class="badge-wrap">
+        <div class="creator-badge">made by:nobodynew227</div>
+      </div>
+    </div>
+
+    <div id="quiz-screen" class="hidden" style="display: none;">
+      <div class="progress-wrap">
+        <div class="progress-text">
+          <span id="q-counter">Soru 1 / 20</span>
+          <span id="player-display"></span>
+        </div>
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div id="question-text" class="question-text"></div>
+      <div id="options-list" class="options-list"></div>
+
+      <div class="badge-wrap">
+        <div class="creator-badge">made by:nobodynew227</div>
+      </div>
+    </div>
+
+    <div id="result-screen" class="hidden" style="display: none;">
+      <div class="result-header">Senin Kıskançlık Oranın:</div>
+      <div id="result-name" class="result-name"></div>
+      <div id="result-percent" class="result-percent">0%</div>
+      <div id="result-level" class="result-level"></div>
+
+      <div class="reaction-box">
+        <div class="reaction-title">Benim Samimi Tepkim (made by:nobodynew227)</div>
+        <div id="reaction-text" class="reaction-text"></div>
+      </div>
+
+      <button type="button" id="restart-btn" class="btn btn-primary" onclick="window.restartQuiz()">Testi Baştan Çöz</button>
+    </div>
+  </div>
+
+  <script>
+    const MY_REACTIONS = [
+      {
+        min: 0,
+        max: 25,
+        level: "Çok Sakin / Umursamaz",
+        comment: "Valla bu kadar sakin kalabiliyorsan helal olsun, ben senin yerinde olsam bu kadar rahat duramazdım gibi geliyor."
+      },
+      {
+        min: 26,
+        max: 50,
+        level: "Tatlı Kıskançlık",
+        comment: "Tam olması gerektiği yerde duruyor bence; ne boğucu ne de tamamen kopuk. Samimi konuşmak gerekirse gayet makul."
+      },
+      {
+        min: 51,
+        max: 75,
+        level: "Belli Eden Kıskanç",
+        comment: "Burada artık 'ben hiç kıskanmam' diyemezsin gibi :) İçinden geçenleri saklamakta zorlandığın baya belli oluyor."
+      },
+      {
+        min: 76,
+        max: 100,
+        level: "Alarm Seviyesi Yüksek",
+        comment: "Dürüst olalım oran baya yüksek çıktı! Bunu tatlıya bağlamak lazım ama detaylara bu kadar takılmak seni de yorabilir."
+      }
+    ];
+
+    const QUESTIONS = [
+      {
+        q: "1. Sevgilin hiç tanımadığı birinin fotoğrafını beğenmiş, sen de tesadüfen gördün. İlk tepkin ne olur?",
+        options: [
+          { text: "Hiç takılmam, sosyal medyada herkes bir şey beğeniyor.", pts: 0 },
+          { text: "Kimmiş diye profiline bir bakarım, o kadar.", pts: 1 },
+          { text: "İçimden bir 'neden beğendi acaba?' geçer ama belli etmem.", pts: 2 },
+          { text: "Direkt sorarım, bu kim ve ne alaka diye.", pts: 3 }
+        ]
+      },
+      {
+        q: "2. Sevgilinin üniversiteden/liseden karşı cins yakın arkadaşıyla baş başa kahve içmeye gitmesi seni nasıl etkiler?",
+        options: [
+          { text: "Gayet normal, eski dostları sonuçta hiç sorun etmem.", pts: 0 },
+          { text: "Biraz merak ederim ama güvenim tam olduğu için ses etmem.", pts: 1 },
+          { text: "İçimde hafif bir rahatsızlık olur, sohbetin sınırını düşünürüm.", pts: 2 },
+          { text: "Açıkçası hiç hoşuma gitmez, baş başa olmalarını istemem.", pts: 3 }
+        ]
+      },
+      {
+        q: "3. Telefonu yanındayken üst üste bildirim geliyor ve sevgilin ekranı hemen ters çeviriyor.",
+        options: [
+          { text: "Özel bir şey yazışıyordur ya da bildirim kalabalığı vardır, umursamam.", pts: 0 },
+          { text: "Gözüm takılır ama 'kim yazıyor?' diye sormam.", pts: 1 },
+          { text: "Kesin biriyle konuşuyor diye içim içimi yer, tavrımı değiştiririm.", pts: 2 },
+          { text: "Kim olduğunu direkt sorarım, saklar gibi yapması sinirimi bozar.", pts: 3 }
+        ]
+      },
+      {
+        q: "4. Sevgilinin eski sevgilisi, doğum gününü ya da özel bir günü kutlayan kısa bir mesaj atmış.",
+        options: [
+          { text: "Medeni bir mesajdır, cevap verip geçerse sorun yok.", pts: 0 },
+          { text: "Hafif gerilirim ama nasıl cevap verdiğine bakarım.", pts: 1 },
+          { text: "Bence hiç gerek yok, neden hala yazıyor ki diye düşünürüm.", pts: 2 },
+          { text: "Kesinlikle rahatsız olurum, mesafeyi net koymasını isterim.", pts: 3 }
+        ]
+      },
+      {
+        q: "5. Kalabalık bir ortamda sevgilin karşı cinsten biriyle çok samimi ve kahkahalarla sohbet ediyor.",
+        options: [
+          { text: "Sosyal biridir, ortamın neşesine kapılmıştır.", pts: 0 },
+          { text: "Ara ara bakarım ama keyfini kaçırmam.", pts: 1 },
+          { text: "Bir süre sonra yanlarına gider ya da konuyu değiştiririm.", pts: 2 },
+          { text: "Fazla samimi bulursam direkt müdahale eder, soğuk davranırım.", pts: 3 }
+        ]
+      },
+      {
+        q: "6. Sevgilin akşam buluşmanız gerekirken arkadaşıyla planını uzattı ve 1.5 saat geç geldi.",
+        options: [
+          { text: "Olur böyle şeyler, trafik ya da muhabbet uzamıştır.", pts: 0 },
+          { text: "Biraz beklemek sıkar ama anlayış gösteririm.", pts: 1 },
+          { text: "Kimleydi, neden bu kadar uzadı diye kurmaya başlarım.", pts: 2 },
+          { text: "Planımıza saygısızlık gibi gelir, net şekilde hesap sorarım.", pts: 3 }
+        ]
+      },
+      {
+        q: "7. Sevgilinin iş ya da okul ortamında karşı cinsten biriyle çok iyi anlaşması ve sürekli şakalaşması?",
+        options: [
+          { text: "İyi anlaşmaları güzel, iş/okul ortamı daha keyifli olur.", pts: 0 },
+          { text: "Normal karşılarım ama abartılı bir yakınlık görürsem dikkat ederim.", pts: 1 },
+          { text: "İçten içe kıskanırım, sürekli ondan bahsetmesi hoşuma gitmez.", pts: 2 },
+          { text: "Bu kadar yakın olmaları beni ciddi rahatsız eder, bunu söylerim.", pts: 3 }
+        ]
+      },
+      {
+        q: "8. Sevgilin şifresini bilmediğin telefonunu kilitli bırakıp lavaboya gitti.",
+        options: [
+          { text: "Herkesin özel alanı var, aklıma bile gelmez.", pts: 0 },
+          { text: "Umursamam, kendi telefonumla ilgilenirim.", pts: 1 },
+          { text: "Açıkçası merak ederim ama bakmamaya çalışırım.", pts: 2 },
+          { text: "Neden şifreli/kapalı tutuyor diye içim daralır, kurcalarım.", pts: 3 }
+        ]
+      },
+      {
+        q: "9. Sevgilin sosyal medyada dış görünüşünü öne çıkaran bir fotoğraf paylaştı ve karşı cinsten iltifat yorumları geldi.",
+        options: [
+          { text: "Güzel çıkmış, iltifat alması normal.", pts: 0 },
+          { text: "Yorumlara bakarım ama çok takılmam.", pts: 1 },
+          { text: "Bazı yorumlar gözüme batar, sevgilimin ne cevap verdiğine bakarım.", pts: 2 },
+          { text: "Rahatsız olurum; fotoğrafı ya da yorumları konuşmak isterim.", pts: 3 }
+        ]
+      },
+      {
+        q: "10. Sevgilin 'Bugün biraz kafamı dinlemek istiyorum, yalnız kalayım' dedi ama çevrimiçi görünmeye devam ediyor.",
+        options: [
+          { text: "Kafa dinleme şekli öyledir, saygı duyarım.", pts: 0 },
+          { text: "Biraz tuhaf gelse de üstelemem.", pts: 1 },
+          { text: "Yalnız kalmak buysa kiminle yazışıyor acaba diye düşünürüm.", pts: 2 },
+          { text: "Bana yalan söyleniyor gibi hissederim, direkt sorarım.", pts: 3 }
+        ]
+      },
+      {
+        q: "11. Ortak bir arkadaşınız sevgilinin geçmişte hoşlandığı kişiden bahsetti.",
+        options: [
+          { text: "Geçmişte kalmış bir şey, hiç üstünde durmam.", pts: 0 },
+          { text: "Kısa bir merak uyandırır ama geçer.", pts: 1 },
+          { text: "Konunun açılması hoşuma gitmez, modum düşer.", pts: 2 },
+          { text: "Hiç sevmem, o konunun açılmasından bile rahatsız olurum.", pts: 3 }
+        ]
+      },
+      {
+        q: "12. Sevgilin tatilde ya da seyahatteyken konum paylaşımı açık değil ve saatlerce haber alamadın.",
+        options: [
+          { text: "Şarjı bitmiştir ya da yoğun bir programı vardır, panik yapmam.", pts: 0 },
+          { text: "Merak ederim ama uygun olunca yazar diye beklerim.", pts: 1 },
+          { text: "İçimde huzursuzluk başlar, peş peşe mesaj atarım.", pts: 2 },
+          { text: "Çok gerilirim; konum açmasını isterim ve ulaşamazsam çıldırırım.", pts: 3 }
+        ]
+      },
+      {
+        q: "13. Sevgilin karşı cinsten bir arkadaşının dertleşmek için gece yarısı aramasına cevap verdi.",
+        options: [
+          { text: "Zor bir anı vardır, arkadaşına destek olması normal.", pts: 0 },
+          { text: "Saat geç olsa da acil bir durumsa anlayış gösteririm.", pts: 1 },
+          { text: "Gece yarısı aranması beni rahatsız eder, konuşmanın süresini takip ederim.", pts: 2 },
+          { text: "Gece yarısı aranmasını kesinlikle kabul etmem, sınır çizmesini isterim.", pts: 3 }
+        ]
+      },
+      {
+        q: "14. Sevgilin senin yanında başka birinin fiziksel özelliğini ya da tarzını 'çok yakışmış' diye övdü.",
+        options: [
+          { text: "Estetik/tarz yorumudur, kıskanmam.", pts: 0 },
+          { text: "Hafifçe takılırım ama ciddiye almam.", pts: 1 },
+          { text: "Benim yanımda övülmesi hoşuma gitmez, bozulurum.", pts: 2 },
+          { text: "Çok kırılır ve kıskanırım; bunu net şekilde belli ederim.", pts: 3 }
+        ]
+      },
+      {
+        q: "15. Sevgilinin takip ettiği yeni hesapların çoğu çekici karşı cins profilleri.",
+        options: [
+          { text: "Keşfet/algoritma meselesidir, önemsemem.", pts: 0 },
+          { text: "Gözüme çarpar ama sorun yapmam.", pts: 1 },
+          { text: "Sürekli yeni kişilerin eklenmesi canımı sıkar.", pts: 2 },
+          { text: "Bunu kesinlikle rahatsız edici bulur ve konuşurum.", pts: 3 }
+        ]
+      },
+      {
+        q: "16. Tartıştığınız günün akşamı sevgilin arkadaşlarıyla dışarı çıkıp gayet keyifli fotoğraflar paylaştı.",
+        options: [
+          { text: "Kafa dağıtmak istemiştir, iyi gelmişse sorun yok.", pts: 0 },
+          { text: "Biraz garibime gider ama çok uzatmam.", pts: 1 },
+          { text: "Biz kırgınken bu kadar rahat olması beni üzer ve kıskandırır.", pts: 2 },
+          { text: "Hiç umursamıyor gibi görünmesi beni çileden çıkarır.", pts: 3 }
+        ]
+      },
+      {
+        q: "17. Sevgilinin yakın arkadaş grubunda seni dışarıda bırakan veya senin hakkında şaka yollu takılan biri var.",
+        options: [
+          { text: "Grup şakasıdır, ciddiye almam.", pts: 0 },
+          { text: "Biraz iğneli gelse de alttan alırım.", pts: 1 },
+          { text: "Sevgilimin beni savunma şekline dikkat eder, içten içe gerilirim.", pts: 2 },
+          { text: "Rahatsız olurum; sevgilimin net tavır koymasını beklerim.", pts: 3 }
+        ]
+      },
+      {
+        q: "18. Sevgilin eski bir fotoğraf albümünde/galerisinde eski sevgilisiyle olan fotoğrafları henüz silmemiş.",
+        options: [
+          { text: "Geçmişin bir parçasıdır, silmek zorunda değil.", pts: 0 },
+          { text: "Görmezden gelirim, şimdiki zaman önemli.", pts: 1 },
+          { text: "Hala duruyor olması içimi biraz burkar.", pts: 2 },
+          { text: "Bence kesinlikle silinmeli, durması beni rahatsız eder.", pts: 3 }
+        ]
+      },
+      {
+        q: "19. Sevgilin bir partide/konserde tanıdığın ya da tanımadığın biriyle dans ederken sana sırtını dönük duruyor.",
+        options: [
+          { text: "Müzik ve kalabalıkta öyle denk gelmiştir, sorun etmem.", pts: 0 },
+          { text: "Bir süre bakarım ama keyfimi bozmam.", pts: 1 },
+          { text: "Yanına gidip aramıza girer ya da dikkatini çekerim.", pts: 2 },
+          { text: "Açıkçası hiç hoşuma gitmez, direkt tepki veririm.", pts: 3 }
+        ]
+      },
+      {
+        q: "20. Sevgilin sana 'Aslında senden önce de biriyle çok yoğun duygular yaşamıştım' dedi.",
+        options: [
+          { text: "Dürüstlüğü için teşekkür ederim, geçmiş geçmişte kalmıştır.", pts: 0 },
+          { text: "Biraz düşünürüm ama olgun karşılarım.", pts: 1 },
+          { text: "İçimde ister istemez bir kıyaslama ve kıskançlık oluşur.", pts: 2 },
+          { text: "Bunu duymak beni ciddi kıskandırır ve huzursuz eder.", pts: 3 }
+        ]
+      }
+    ];
+
+    let currentName = "";
+    let currentIndex = 0;
+    let totalScore = 0;
+    const maxScore = QUESTIONS.length * 3;
+
+    function showScreen(targetId) {
+      ["start-screen", "quiz-screen", "result-screen"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (id === targetId) {
+          el.classList.remove("hidden");
+          el.style.display = "block";
+        } else {
+          el.classList.add("hidden");
+          el.style.display = "none";
+        }
+      });
+    }
+
+    window.startQuiz = function () {
+      try {
+        const playerNameInput = document.getElementById("player-name");
+        const errorMsg = document.getElementById("error-msg");
+        const playerDisplay = document.getElementById("player-display");
+
+        const nameVal = (playerNameInput ? playerNameInput.value : "").trim();
+        if (!nameVal) {
+          if (errorMsg) errorMsg.textContent = "Devam etmek için önce adını yazmalısın.";
+          if (playerNameInput) playerNameInput.focus();
+          return;
+        }
+
+        if (errorMsg) errorMsg.textContent = "";
+        currentName = nameVal;
+        currentIndex = 0;
+        totalScore = 0;
+
+        showScreen("quiz-screen");
+        if (playerDisplay) playerDisplay.textContent = currentName;
+        renderQuestion();
+      } catch (err) {
+        alert("Bir hata oluştu: " + err.message);
+      }
+    };
+
+    function renderQuestion() {
+      const qCounter = document.getElementById("q-counter");
+      const progressFill = document.getElementById("progress-fill");
+      const questionText = document.getElementById("question-text");
+      const optionsList = document.getElementById("options-list");
+
+      const item = QUESTIONS[currentIndex];
+      if (qCounter) qCounter.textContent = `Soru ${currentIndex + 1} / ${QUESTIONS.length}`;
+      if (progressFill) progressFill.style.width = `${(currentIndex / QUESTIONS.length) * 100}%`;
+      if (questionText) questionText.textContent = item.q;
+      if (!optionsList) return;
+
+      optionsList.innerHTML = "";
+      item.options.forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "option-btn";
+        btn.textContent = opt.text;
+        btn.onclick = function () {
+          selectOption(opt.pts);
+        };
+        optionsList.appendChild(btn);
+      });
+    }
+
+    function selectOption(pts) {
+      totalScore += pts;
+      currentIndex++;
+
+      if (currentIndex < QUESTIONS.length) {
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const progressFill = document.getElementById("progress-fill");
+      const resultName = document.getElementById("result-name");
+      const resultPercent = document.getElementById("result-percent");
+      const resultLevel = document.getElementById("result-level");
+      const reactionText = document.getElementById("reaction-text");
+
+      if (progressFill) progressFill.style.width = "100%";
+      showScreen("result-screen");
+
+      const percentage = Math.round((totalScore / maxScore) * 100);
+      const matched =
+        MY_REACTIONS.find((r) => percentage >= r.min && percentage <= r.max) ||
+        MY_REACTIONS[MY_REACTIONS.length - 1];
+
+      if (resultName) resultName.textContent = currentName;
+      if (resultPercent) resultPercent.textContent = `${percentage}%`;
+      if (resultLevel) resultLevel.textContent = matched.level;
+      if (reactionText) reactionText.textContent = matched.comment;
+    }
+
+    window.restartQuiz = function () {
+      const playerNameInput = document.getElementById("player-name");
+      showScreen("start-screen");
+      if (playerNameInput) {
+        playerNameInput.value = "";
+        playerNameInput.focus();
+      }
+    };
+  </script>
+</body>
+</html>
